@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { addDays, format } from 'date-fns';
 import EmployeeTable from '../../components/directory/EmployeeTable';
 import { Employee } from '../../types/employee';
+
+const isoDate = (date: Date) => format(date, 'yyyy-MM-dd');
 
 const makeEmployee = (overrides: Partial<Employee>): Employee => ({
   id: 'test-id',
@@ -50,5 +53,18 @@ describe('EmployeeTable', () => {
     render(<EmployeeTable employees={[]} />);
     const rows = document.querySelectorAll('tbody tr');
     expect(rows).toHaveLength(0);
+  });
+
+  it('shows a probation alert badge for employees whose review is due soon', () => {
+    const employees = [
+      makeEmployee({
+        id: '1',
+        name: 'Aisha',
+        status: 'probation',
+        probationEndDate: isoDate(addDays(new Date(), 10)),
+      }),
+    ];
+    render(<EmployeeTable employees={employees} />);
+    expect(screen.getByText('Review Due')).toBeInTheDocument();
   });
 });

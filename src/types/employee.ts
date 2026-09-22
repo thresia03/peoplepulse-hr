@@ -11,7 +11,7 @@ export interface Employee {
   status: EmploymentStatus;
   employeeType: EmployeeType;
   joinDate: string; // ISO
-  probationEndDate: string | null; // declared, populated, READ BY NOTHING
+  probationEndDate: string | null;
   location: string;
   avatarInitials: string;
 }
@@ -20,3 +20,5 @@ export type DirectoryFilter = {
   status: EmploymentStatus | 'all';
   search: string;
 };
+
+export type ProbationAlertStatus = 'review-due' | 'overdue';

@@ -1,6 +1,7 @@
 import { Employee } from '../../types/employee';
 import Table from '../ui/Table';
 import StatusBadge from './StatusBadge';
+import ProbationAlertBadge from './ProbationAlertBadge';
 
 interface EmployeeTableProps {
   employees: Employee[];
@@ -40,7 +41,12 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
         {
           key: 'status',
           header: 'Status',
-          render: (e) => <StatusBadge status={e.status} />,
+          render: (e) => (
+            <div className="flex flex-col gap-1">
+              <StatusBadge status={e.status} />
+              <ProbationAlertBadge employee={e} />
+            </div>
+          ),
         },
         {
           key: 'location',
